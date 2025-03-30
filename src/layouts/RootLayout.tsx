@@ -15,7 +15,7 @@ const RootLayout = () => {
         {
             pathname === '/' && <Banner />
         }
-        <main className="container m-8 flex-1">
+        <main className="container m-8 mx-auto flex-1">
             <Outlet />
         </main>
         {
