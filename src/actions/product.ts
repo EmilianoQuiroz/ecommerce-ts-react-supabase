@@ -14,7 +14,13 @@ export const getProducts = async () => {
   return products;
 };
 
-export const getFilteredProducts = async ({ page = 1, brands = [] }) => {
+export const getFilteredProducts = async ({
+  page = 1,
+  brands = [],
+}: {
+  page: number;
+  brands: string[];
+}) => {
   const itemsPerPage = 10;
   const from = (page - 1) * itemsPerPage;
   const to = from + itemsPerPage - 1;
