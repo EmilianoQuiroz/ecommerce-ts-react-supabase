@@ -5,6 +5,9 @@ import { popularCelulares, recentCelulares } from "../../data/initialData";
 import { prepareProducts } from "../../helpers";
 
 export const HomePage = () => {
+
+  // Custom Hook para utilizar Tanstack Query de manera sencilla
+  
   const preparedRecentProducts = prepareProducts(recentCelulares);
   const preparedPopularProducts = prepareProducts(popularCelulares);
 

@@ -1,10 +1,17 @@
 import { CardProducts } from "../../components/products/CardProducts";
 import { ContainerFilter } from "../../components/products/containerfilter/ContainerFilter";
-import { allCelulares } from "../../data/initialData";
 import { prepareProducts } from "../../helpers";
+import { useProducts } from "../../hooks";
 
 export const CellPhonesPage = () => {
-  const preparedProducts = prepareProducts(allCelulares);
+  
+  const { products, isLoading } = useProducts();
+
+  if (isLoading || !products) {
+    return <p>Cargando...</p>;
+  }
+
+  const preparedProducts = prepareProducts(products);
 
   return (
     <>
