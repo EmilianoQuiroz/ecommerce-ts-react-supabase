@@ -42,3 +42,36 @@ export const getFilteredProducts = async ({
   }
   return { data, count };
 };
+
+// Consulta directa a nuestra base de datos supabase para obtener los ultimos 4 productos
+export const getRecentProducts = async () => {
+  const { data: products, error } = await supabase
+    .from("products")
+    .select("*, variants(*)")
+    .order("created_at", { ascending: false })
+    .limit(4);
+
+  if (error) {
+    console.error(error.message);
+    throw new Error(error.message);
+  }
+  return products;
+};
+
+// Funcion para obtener productos random de la base de datos
+export const getRandomProducts = async () => {
+  const { data: products, error } = await supabase
+    .from("products")
+    .select("*, variants(*)")
+    .limit(20);
+
+  if (error) {
+    console.error(error.message);
+    throw new Error(error.message);
+  }
+
+  // Seleccionar 4 productos al azar
+  const randomProducts = products.sort(() => 0.5 - Math.random()).slice(0, 4);
+
+  return randomProducts;
+};
