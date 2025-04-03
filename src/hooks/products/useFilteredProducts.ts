@@ -16,6 +16,6 @@ export const useFilteredProducts = ({
   return {
     data: data?.data,
     isLoading,
-    totalProducts: data?.count
+    totalProducts: data?.count ?? 0,
   };
 };

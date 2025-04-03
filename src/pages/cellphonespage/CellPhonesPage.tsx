@@ -3,6 +3,7 @@ import { CardProducts } from "../../components/products/CardProducts";
 import { ContainerFilter } from "../../components/products/containerfilter/ContainerFilter";
 import { prepareProducts } from "../../helpers";
 import { useFilteredProducts } from "../../hooks";
+import { Pagination } from "../../components/shared/pagination/Pagination";
 
 export const CellPhonesPage = () => {
   const [page, setPage] = useState(1);
@@ -52,6 +53,11 @@ export const CellPhonesPage = () => {
               ))}
             </div>
             {/** TODO: Paginacion */}
+            <Pagination 
+              totalItems={totalProducts}
+              page={page}
+              setPage={setPage}
+            />
           </div>
         )}
       </div>
