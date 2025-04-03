@@ -4,6 +4,7 @@ import { formatPrice } from "../../helpers";
 import { CiDeliveryTruck } from "react-icons/ci";
 import { Link } from "react-router-dom";
 import { BsChatLeftText } from "react-icons/bs";
+import { ProductDescription } from "../../components/one-product/product-description/ProductDescription";
 
 export const CellPhonePage = () => {
   return (
@@ -27,10 +28,9 @@ export const CellPhonePage = () => {
           <Separator />
           {/** Caracteristicas del producto */}
           <ul className="space-y-2 ml-7 my-10">
-            <li className="text-sm flex items-cemter gap-2 tracking-tight font-medium">
-              <span className="bg-black w-[5px] h-[5px] rounded-full">
+            <li className='text-sm flex items-center gap-2 tracking-tight font-medium'>
+              <span className="bg-black w-[5px] h-[5px] rounded-full" />
                 256GB de almacenamiento
-              </span>
             </li>
           </ul>
 
@@ -114,6 +114,7 @@ export const CellPhonePage = () => {
         </div>
       </div>
       {/** Descripcion del producto */}
+      <ProductDescription />
     </>
   );
 };
