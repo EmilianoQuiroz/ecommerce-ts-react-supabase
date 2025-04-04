@@ -11,6 +11,7 @@ import { VariantProduct } from "../../interfaces";
 import { useEffect, useMemo, useState } from "react";
 import { Tag } from "../../components/shared/tag/Tag";
 import { Loader } from "../../components/shared/loader/Loader";
+import { useCounterStore } from "../../store/counter/counter.store";
 
 interface Acc {
   [key: string]: {
@@ -29,6 +30,11 @@ export const CellPhonePage = () => {
   const [selectedVariant, setSelectedVariant] = useState<VariantProduct | null>(
     null
   );
+
+  //Estado del contador
+  const count = useCounterStore((state) => state.count);
+  const increment = useCounterStore((state) => state.increment);
+  const decrement = useCounterStore((state) => state.decrement);
 
   // Agrupamos las variantes por color
   const colors = useMemo(() => {
@@ -79,9 +85,7 @@ export const CellPhonePage = () => {
   const isOutOfStock = selectedVariant?.stock === 0;
 
   if (isLoading) {
-    return (
-      <Loader />
-    )
+    return <Loader />;
   }
 
   if (!product || isError) {
@@ -112,7 +116,10 @@ export const CellPhonePage = () => {
           {/** Caracteristicas del producto */}
           <ul className="space-y-2 ml-7 my-10">
             {product.features.map((feature) => (
-              <li key={feature} className="text-sm flex items-center gap-2 tracking-tight font-medium">
+              <li
+                key={feature}
+                className="text-sm flex items-center gap-2 tracking-tight font-medium"
+              >
                 <span className="bg-black w-[5px] h-[5px] rounded-full" />
                 {feature}
               </li>
@@ -124,40 +131,40 @@ export const CellPhonePage = () => {
             <p>Color: {selectedColor && colors[selectedColor].name}</p>
             <div className="flex gap-3">
               {/** Iteramos los colores disponibles */}
-            {
-              avaiableColors.map((color) => (
+              {avaiableColors.map((color) => (
                 <button
                   key={color}
                   className={`w-8 h-8 rounded-full flex justify-center items-center ${
-                  selectedColor == color ? "border border-slate-800" : ""
-                }`}
-                onClick={() => setSelectedColor(color)}
-              >
-                <span
-                  className="w-[26px] h-[26px] rounded-full"
-                  style={{ backgroundColor: color }}
-                ></span>
-              </button>
-              ))
-            }
+                    selectedColor == color ? "border border-slate-800" : ""
+                  }`}
+                  onClick={() => setSelectedColor(color)}
+                >
+                  <span
+                    className="w-[26px] h-[26px] rounded-full"
+                    style={{ backgroundColor: color }}
+                  ></span>
+                </button>
+              ))}
             </div>
           </div>
           {/** Opciones de almacenamiento */}
           <div className="flex flex-col gap-3">
             <p className="text-sm font-medium">Almacenamiento disponible</p>
-            {
-              selectedColor && (
-                <div className="flex gap-3">
-                <select className="border border-gray-300 rounded-lg px-3 py-1" value={selectedStorage || ''} onChange={(e) => setSelectedStorage(e.target.value)}>
-                  {
-                    colors[selectedColor].storages.map(storage => (
-                      <option value={storage} key={storage}>{storage}</option>
-                    ))
-                  }
+            {selectedColor && (
+              <div className="flex gap-3">
+                <select
+                  className="border border-gray-300 rounded-lg px-3 py-1"
+                  value={selectedStorage || ""}
+                  onChange={(e) => setSelectedStorage(e.target.value)}
+                >
+                  {colors[selectedColor].storages.map((storage) => (
+                    <option value={storage} key={storage}>
+                      {storage}
+                    </option>
+                  ))}
                 </select>
               </div>
-              )
-            }
+            )}
           </div>
           {/** Comprar */}
           {isOutOfStock ? (
@@ -169,14 +176,20 @@ export const CellPhonePage = () => {
             </button>
           ) : (
             <>
+            {/** Contador de cantidad */}
               <div className="space-y-3">
                 <p className="text-sm font-medium">Cantidad:</p>
                 <div className="flex gap-8 px-5 py-3 border border-slate-200 w-fit rounded-full">
-                  <button>
+                  <button
+                    onClick={decrement}
+                    disabled={count === 1}
+                  >
                     <LuMinus size={15} />
                   </button>
-                  <span className="text-slate-500 text-sm">1</span>
-                  <button>
+                  <span className="text-slate-500 text-sm">{count}</span>
+                  <button
+                    onClick={increment}
+                  >
                     <LuPlus size={15} />
                   </button>
                 </div>
@@ -213,7 +226,7 @@ export const CellPhonePage = () => {
         </div>
       </div>
       {/** Descripcion del producto */}
-      <ProductDescription content={product.description}/>
+      <ProductDescription content={product.description} />
     </>
   );
 };
