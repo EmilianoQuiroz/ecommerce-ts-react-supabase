@@ -3,12 +3,14 @@ import Navbar from "../components/shared/navbar/Navbar"
 import Footer from "../components/shared/footer/Footer"
 import { Banner } from "../components/home/banner/Banner"
 import { NewsLetter } from "../components/home/newsletter/NewsLetter"
+import { Sheet } from "../components/shared/sheet/Sheet"
+import { useGlobalStore } from "../store/global/global.store"
 
  
 const RootLayout = () => {
 
   const { pathname } = useLocation()
-  
+  const isSheetOpen = useGlobalStore(state => state.isSheetOpen)
   return (
     <div className="h-screen flex flex-col">
         <Navbar />
@@ -20,6 +22,9 @@ const RootLayout = () => {
         </main>
         {
             pathname === '/' && <NewsLetter />
+        }
+        {
+          isSheetOpen && <Sheet />
         }
         <Footer />
     </div>

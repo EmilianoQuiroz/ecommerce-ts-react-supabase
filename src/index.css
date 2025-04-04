@@ -2,12 +2,61 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+/* Variables de tema */
 @theme {
   --font-family: "Montserrat", sans-serif;
 }
 
+/* Aplicar fuente globalmente */
 * {
   font-family: var(--font-family);
+}
+
+/* Animaciones personalizadas */
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-in {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-in-left {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* Declarar las utilidades de animaciones personalizadas */
+@layer utilities {
+  .animate-fade-in {
+    animation: fade-in 0.3s ease-out;
+  }
+
+  .animate-slide-in {
+    animation: slide-in 0.3s ease-out;
+  }
+
+  .animate-slide-in-left {
+    animation: slide-in-left 0.3s ease-out;
+  }
+
+  .animate-spin-slow {
+    animation: spin 2s linear infinite;
+  }
 }
 
 /* CLASES PERSONALIZADAS */
